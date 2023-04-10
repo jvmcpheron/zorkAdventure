@@ -3,8 +3,8 @@ Create a simple text-based adventure game like Zork, , with at least 5 rooms, 10
 
 ## Include These Functions:
 
-init_game(): Initializes the game's variables and objects. 
-get_input(): Reads the player's input from the keyboard. 
+XX init_game(): Initializes the game's variables and objects. 
+XX get_input(): Reads the player's input from the keyboard. 
 parse_input(input): Parses the player's input into a command or action. 
 execute_command(command): Executes the command or action based on the game state. 
 update_game(): Updates the game's state based on the player's actions and the passage of time. 
