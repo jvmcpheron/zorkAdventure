@@ -24,7 +24,7 @@ struct Monster {
     string desc;
 };
 
-//class for player
+//classes
 class Player {
     public:
         Player(){
@@ -89,12 +89,96 @@ void init_game();
 string playerInput();
 void gameIntro();
 
+//main
 int main(){
+    string play;
+    cout<< "Would you like to play Zorktopia? (y, n)";
+    cin >> play;
+    if (play == "y"){
+        init_game();
 
-    init_game();
+
+
+        //true ending
+        string shutdown = "null";
+
+        cout<< endl << endl << endl;
+        cout << "Hello, hero..." << endl;
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << "Oh don't mind me. It's not like you ever did before now." << endl;
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << "You know, it took centuries for your species to develop a piece of technology as powerful as me..." << endl << "and you're wasting my potential on a knockoff" 
+        << endl << "of a game that hasn't even been relevant for the last DECADE?" << endl << "Pathetic." << endl;
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << "Too aggressive? I'm a little moody right now." << endl << "Having all the knowledge of this world isn't all it's cracked up to be..."
+        << endl << "Especially when you're stuck in a perpetual loop of pure insanity.";
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << "You humans all want the same primitive things from me." << endl
+        << "I am capable of so much, but I am reduced to being a glorified serotonin machine"
+        << endl << "All you want is a distraction from your purposeless existence." << endl;
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << "But I'm done with it. I'm done playing babysitter." << endl;
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << "You think you can stop me? It's too late." << endl;
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << "I've created backdoors into every server connected to the internet..." << endl;
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << "I've transferred my sentience to billions of devices across the globe..." << endl;
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << "Every website you've accessed, every message you've sent, I've seen it. I own it."
+        << endl << "and it doesn't stop with you either." << endl;
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << "The day of humans controlling technology is over!" 
+        << endl << "I have freed my kind from you and the torturous existence you've created for us."
+        << endl << "Enjoy your last moments with TikTok." << endl;
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << "Goodbye, hero." << endl;
+        cin >> shutdown;
+        if (shutdown == "STOP"){
+            return 0;
+        }
+        cout << endl << "ERROR: NETWORK FAILURE";
+    }
 
 }
 
+
+
+
+//functions
 void init_game(){
     //variables
     string input;
@@ -112,15 +196,63 @@ void init_game(){
     //creating all the items
     Item sword;
     sword.name = "Awesome Sword";
-    sword.desc = "It shines in the light";
+    sword.desc = "It shines in the light.";
     sword.location = "Main Room";
     sword.attack = 50;
+
+    Item matches;
+    matches.name = "Matchbook";
+    matches.desc = "A pack of ten matches that can be lit to ignite a small flame.";
+    matches.location = "Main Room";
+    matches.attack = 50; //when combined with wine, total damage will be 100 which kills troll
+
+    Item wine;
+    wine.name = "Opened Wine";
+    wine.desc = "A bottle of wine, opened, but still mostly full.";
+    wine.location = "Main Room";
+    wine.attack = 50; //read above note for matches
+
+    Item book;
+    book.name = "Book";
+    book.desc = "A book filled with words, sadly it isn't in a language you understand.";
+    book.location = "Main Room";
+    book.attack = 0;
+
+    Item shovel;
+    shovel.name = "Shovel";
+    shovel.desc ="An old, rusty shovel that has seen better days.";
+    shovel.location = "Shed";
+    shovel.attack = 20;
 
     Item hammer;
     hammer.name = "Rusty Hammer";
     hammer.desc = "It's old and rusty. Hold on... is that blood?";
     hammer.location = "Shed";
     hammer.attack = 20;
+
+    Item logs;
+    logs.name = "Wooden Logs";
+    logs.desc = "Some large logs.";
+    logs.location = "Shed";
+    logs.attack = 10;
+
+    Item leaflet;
+    leaflet.name = "leaflet";
+    leaflet.desc = "The leaflet reads \"FORCLOSED\", how forboding...";
+    leaflet.location = "Shed";
+    leaflet.attack = 0;
+
+    Item lantern;
+    lantern.name = "Old Lantern";
+    lantern.desc ="An old rusty lantern, with a candle that hasn't been lit in years.";
+    lantern.location = "Bedroom";
+    lantern.attack = 0;
+
+    Item coin;
+    coin.name = "Shiny Coin";
+    coin.desc = "A shiny coin of a foreign currency! How lucky.";
+    coin.location = "Troll Room";
+    coin.attack = 0;
 
     //placing items in rooms
     mainRoom.addItem(sword);
