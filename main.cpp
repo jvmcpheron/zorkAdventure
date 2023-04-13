@@ -144,12 +144,12 @@ void lookAround(string currentLocation, vector<Item> items, vector<Room> allRoom
     //get input function
 string userInput(){
     string temp;
-    cout << "What would you like to do?"<< endl;
+    cout << "What would you like to do? (Move, Look, Take, Map)"<< endl;
     cin >> temp;
     return temp;
 }
     //checking movement function
-string checkMove(string currentLocation, string direction){
+string checkMove(string currentLocation, string direction, vector<Item> bag){
     string temp;
     if (currentLocation == "shed"){
         if (direction == "W"){
@@ -174,22 +174,107 @@ string checkMove(string currentLocation, string direction){
         }
     }else if (currentLocation == "stairWell"){
         if (direction == "W"){
-            temp = "trollRoom";
+            if (bag.size() == 10){
+                temp = "trollRoom";
+            } else{
+                temp = "none";
+                cout << "You do not have all the relics! You may not enter.";
+            }
         }else if (direction == "E"){
             temp = "bedRoom";
+        }else if (direction == "S"){
+            temp = "mainRoom";
         }else{
             temp = "none";
         }  
-    }else if (currentLocation == "trollRoom"){
-        if (direction == "E"){
-            temp = "stairWell";
-        }else{
-            temp = "none";
-        }
     }
     return temp;
 }
+    //troll fight intro function
+void trollIntro(){
+    cout << "Welcome to your final test!"<< endl
+    << "A large ugly troll stands before you."<<endl
+    << "You must defeat this troll to win the game!";
+}
+    //troll fight function
+bool trollFight(){
+    int playerHealth = 100;
+    int trollHealth = 200;
+    bool trollWine = false;
 
+    while (true){
+        string attackChoice;
+        cout << "What would you like to do? (Sword_Attack, Throw_Item)"<< endl;
+        cin >> attackChoice;
+        if (attackChoice == "Sword_Attack"){
+            trollHealth -= 50;
+            cout << "You swing your awesome sword!" << endl;
+        }else if (attackChoice == "Throw_Item"){
+            cout << "Which item would you like to throw? (Wine, Match, Hammer, Book)"<< endl;
+            cin >> attackChoice;
+            if (attackChoice == "Book"){
+                trollHealth -= 10;
+                cout << "You throw your book. The troll now knows you're a nerd." << endl;
+            }else if (attackChoice == "Hammer"){
+                cout << "You throw your hammer. Hey, you could have made a worse choice." << endl;
+                trollHealth -= 30;
+            }else if (attackChoice == "Wine"){
+                cout << "You splash some wine on the troll. I guess it's five o'clock somewhere." << endl;
+                trollWine = true;
+            }else if (attackChoice == "Match"){
+                if (trollWine == true){
+                    cout << "The troll, covered in subpar alcohol, bursts into flames. Clever. I never should have doubted you." << endl;
+                    trollHealth = 0;
+                }else {
+                    trollHealth -= 5;
+                    cout << "You toss a lit match, which is a little rude more than anything else." << endl;
+                }
+            }
+        }
+        if (trollHealth <= 0){
+            return true;
+        }
+        cout << "The troll swings it's huge axe at you."<<endl;
+        playerHealth -=25;
+        if (playerHealth <= 0){
+            return false;
+        }        
+    }
+}
+    //function for checking map
+void mapArea(){
+    cout << "*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*\n"
+    << "*																																*\n"
+    << "*																																*\n"
+    << "*																																*\n"
+    << "*																								*	*	*	*	*	*	*		*\n"
+    << "*													*	*	*	*	*	*	*	*	*			*						*		*\n"
+    << "*								*	*	*	*	*	*								*	*	*	*						*		*\n"
+    << "*								*							Stairwell										bedroom		*		*\n"
+    << "*								*		*	*	*	*								*	*	*	*						*		*\n"
+    << "*								*		*			*	*	*		*	*	*	*	*			*						*		*\n"
+    << "*			*	*	*	*	*	*		*	*	*			*		*							*	*	*	*	*	*	*		*\n"
+    << "*			*									*		*	*		*	*	*	*	*	*	*									*\n"
+    << "*			*									*		*									*	*	-	-	*	*				*\n"
+    << "*			*									*		*									*					*				*\n"
+    << "*			*				Troll room			*		*									*					*				*\n"
+    << "*			*									*		*														|				*\n"
+    << "*			*									*		*			Main Room							Shed	|	            *\n"
+    << "*			*	*	*	*	*	*	*	*	*	*		*									*					*				*\n"
+    << "*														*									*					*				*\n"
+    << "*														*									*	*	-	-	*	*				*\n"
+    << "*														*									*									*\n"
+    << "*														*	*	*	*			*	*	*	*									*\n"
+    << "*															mail																*\n"
+    << "*															box																	*\n"
+    << "*			*	*	*	*	*	*	*	*																						*\n"
+    << "*			*																													*\n"
+    << "*			*		Log shed																									*\n"
+    << "*			*							*																						*\n"
+    << "*			*	*	*	*	*	*	*	*																						*\n"
+    << "*																																*\n"
+    << "*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*";
+}
 //game
 int main(){
     //VARIABLES
@@ -202,6 +287,8 @@ int main(){
     string itemTake;
     string moveDirection;
     string futureLocation = "none";
+
+    bool gameWin;
 
     //initializing items
     allItems = loadItems();
@@ -238,7 +325,7 @@ int main(){
         if (input == "Move"){
             cout << "What direction? (N,S,E,W)" << endl;
             cin >> moveDirection;
-            futureLocation = checkMove(currentLocation, moveDirection);
+            futureLocation = checkMove(currentLocation, moveDirection, bag);
             if (futureLocation != "none"){
                 currentLocation = futureLocation;
                 futureLocation = "none";
@@ -247,7 +334,20 @@ int main(){
             } else{
                 cout << "You cannot move that way." << endl;
             }
+            if (currentLocation == "trollRoom"){
+                trollIntro();
+                break;
+            }
+        }
+        if (input == "Map"){
+            mapArea();
         } 
+    }
+    gameWin = trollFight();
+    if (gameWin == true){
+        cout << "Congrats! you have passed the test! Welcome to Zorktopia." <<endl;
+    }else{
+        cout << "The troll's axe lands squarely in your face. I guess you're dead now. Bummer."<<endl;
     }
 
 }
